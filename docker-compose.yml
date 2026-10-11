@@ -1,0 +1,34 @@
+services:
+  web:
+    build: .
+    container_name: cloudops-web
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_NAME: cloudops_db
+      DB_USER: cloudops_user
+      DB_PASSWORD: cloudops_local_pass
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: cloudops-db
+    environment:
+      POSTGRES_DB: cloudops_db
+      POSTGRES_USER: cloudops_user
+      POSTGRES_PASSWORD: cloudops_local_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cloudops_user -d cloudops_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

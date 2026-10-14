@@ -11,15 +11,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
-}
-
-data "aws_s3_bucket" "project_storage" {
-  bucket = "company-project-storage-poonam"
-}
-
-output "project_bucket_name" {
-  value = data.aws_s3_bucket.project_storage.bucket
+  region = "eu-north-1"
 }
 
 data "aws_s3_bucket" "project_storage" {

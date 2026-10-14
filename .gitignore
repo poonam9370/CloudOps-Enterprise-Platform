@@ -1,2 +1,6 @@
 __pycache__/
 .terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/
+terraform/crash.log
